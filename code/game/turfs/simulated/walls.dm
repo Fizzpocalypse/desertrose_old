@@ -8,6 +8,9 @@
 	explosion_block = 1
 	flags_1 = DEFAULT_RICOCHET_1
 	flags_ricochet = RICOCHET_HARD
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_WALLS)
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 	attack_hand_speed = 8
@@ -21,17 +24,7 @@
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
 
-	canSmoothWith = list(
-	/turf/closed/wall,
-	/turf/closed/wall/r_wall,
-	/obj/structure/falsewall,
-	/obj/structure/falsewall/brass,
-	/obj/structure/falsewall/reinforced,
-	/turf/closed/wall/rust,
-	/turf/closed/wall/r_wall/rust,
-	/turf/closed/wall/clockwork)
-	smooth = SMOOTH_TRUE
-
+	
 	var/list/dent_decals
 
 /turf/closed/wall/examine(mob/user)

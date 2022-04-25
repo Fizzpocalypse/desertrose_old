@@ -71,7 +71,7 @@
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
 	icon_state = "sandstone"
 	baseturfs = /turf/closed/indestructible/sandstone
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 
 /turf/closed/indestructible/wood
 	name = "wooden wall"
@@ -107,13 +107,15 @@
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 	explosion_block = INFINITY
 
 /turf/closed/indestructible/syndicate
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
@@ -129,7 +131,7 @@
 	name = "window"
 	icon_state = "fake_window"
 	opacity = 0
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
 /turf/closed/indestructible/fakeglass/Initialize()
@@ -181,8 +183,8 @@
 /turf/closed/indestructible/rock/snow/ice/ore
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smooth = SMOOTH_CORNERS | SMOOTH_BORDER
+	canSmoothWith = list (SMOOTH_GROUP_CLOSED_TURFS)
 	pixel_x = -4
 	pixel_y = -4
 
@@ -211,7 +213,8 @@
 	desc = "A thick, seemingly indestructible stone wall."
 	icon = 'icons/turf/walls/boss_wall.dmi'
 	icon_state = "wall"
-	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_BOSS_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_BOSS_WALLS)
 	explosion_block = 50
 	baseturfs = /turf/closed/indestructible/riveted/boss
 
