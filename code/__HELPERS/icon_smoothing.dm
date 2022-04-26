@@ -34,7 +34,8 @@
 #define SOUTHWEST_JUNCTION (1<<6)
 #define NORTHWEST_JUNCTION (1<<7)
 
-DEFINE_BITFIELD(smoothing_junction, list(
+DEFINE_BITFIELD(smoothing_junction, 
+	list(
 	"NORTH_JUNCTION" = NORTH_JUNCTION,
 	"SOUTH_JUNCTION" = SOUTH_JUNCTION,
 	"EAST_JUNCTION" = EAST_JUNCTION,
@@ -95,7 +96,52 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 ///Scans all adjacent turfs to find targets to smooth with.
 /atom/proc/calculate_adjacencies()
-  return
+	. = NONE
+
+	if(!loc)
+		return
+
+	for(var/direction in GLOB.cardinals)
+		switch(find_type_in_direction(direction))
+			if(NULLTURF_BORDER)
+				if((smoothing_flags & SMOOTH_BORDER))
+					. |= direction //BYOND and smooth dirs are the same for cardinals
+			if(ADJ_FOUND)
+				. |= direction //BYOND and smooth dirs are the same for cardinals
+
+	if(. & NORTH_JUNCTION)
+		if(. & WEST_JUNCTION)
+			switch(find_type_in_direction(NORTHWEST))
+				if(NULLTURF_BORDER)
+					if((smoothing_flags & SMOOTH_BORDER))
+						. |= NORTHWEST_JUNCTION
+				if(ADJ_FOUND)
+					. |= NORTHWEST_JUNCTION
+
+		if(. & EAST_JUNCTION)
+			switch(find_type_in_direction(NORTHEAST))
+				if(NULLTURF_BORDER)
+					if((smoothing_flags & SMOOTH_BORDER))
+						. |= NORTHEAST_JUNCTION
+				if(ADJ_FOUND)
+					. |= NORTHEAST_JUNCTION
+
+	if(. & SOUTH_JUNCTION)
+		if(. & WEST_JUNCTION)
+			switch(find_type_in_direction(SOUTHWEST))
+				if(NULLTURF_BORDER)
+					if((smoothing_flags & SMOOTH_BORDER))
+						. |= SOUTHWEST_JUNCTION
+				if(ADJ_FOUND)
+					. |= SOUTHWEST_JUNCTION
+
+		if(. & EAST_JUNCTION)
+			switch(find_type_in_direction(SOUTHEAST))
+				if(NULLTURF_BORDER)
+					if((smoothing_flags & SMOOTH_BORDER))
+						. |= SOUTHEAST_JUNCTION
+				if(ADJ_FOUND)
+					. |= SOUTHEAST_JUNCTION
 
 
 /atom/movable/calculate_adjacencies()
